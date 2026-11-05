@@ -10,11 +10,12 @@
 
     <!-- Primary Unified Navigation Bar -->
     <div class="container mx-auto max-w-4xl mb-6 flex justify-between items-center border-b bg-white p-4 rounded-lg shadow-sm">
-        <div class="flex space-x-4">
-            <a th:href="@{/}" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-2">Students</a>
-            <a th:href="@{/professors}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Faculty</a>
-            <a th:href="@{/courses}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Courses</a>
-        </div>
+<div class="flex space-x-4">
+    <a th:href="@{/}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Students</a>
+    <a th:href="@{/professors}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Faculty</a>
+    <a th:href="@{/courses}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Courses</a>
+    <a th:href="@{/grades}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Grades</a>
+</div>
         <a th:href="@{/add-student}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow text-sm">
             + Add New Student
         </a>
