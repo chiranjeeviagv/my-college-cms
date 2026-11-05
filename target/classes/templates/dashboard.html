@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>College Management System</title>
-    <!-- Corrected script pointer to target the live CDN script engine -->
+    <!-- Live Tailwind CSS Engine Link -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans p-8">
 
-    <!-- Moved Navigation Ribbon inside the body block to ensure structural alignment -->
+    <!-- Primary Unified Navigation Bar -->
     <div class="container mx-auto max-w-4xl mb-6 flex justify-between items-center border-b bg-white p-4 rounded-lg shadow-sm">
         <div class="flex space-x-4">
-            <a th:href="@{/}" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-2">Student Dashboard</a>
-            <a th:href="@{/professors}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Faculty Directory</a>
+            <a th:href="@{/}" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-2">Students</a>
+            <a th:href="@{/professors}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Faculty</a>
+            <a th:href="@{/courses}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Courses</a>
         </div>
         <a th:href="@{/add-student}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow text-sm">
             + Add New Student
         </a>
     </div>
 
-    <!-- Main Content Board Container -->
+    <!-- Main Content Grid Board -->
     <div class="container mx-auto max-w-4xl bg-white p-6 rounded-lg shadow-md">
         <div class="mb-6 flex justify-between items-center">
             <h1 class="text-3xl font-bold text-gray-800">Student Profiles</h1>
@@ -36,12 +37,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     <tr th:each="student : ${students}" class="border-b border-gray-200 hover:bg-gray-50 text-gray-700 transition">
                         <td class="px-5 py-4" th:text="${student.id}">1</td>
                         <td class="px-5 py-4 font-medium" th:text="${student.name}">John Doe</td>
                         <td class="px-5 py-4" th:text="${student.email}">john@college.edu</td>
                         <td class="px-5 py-4" th:text="${student.department}">Computer Science</td>
                     </tr>
+                    <!-- Displays empty state when record rows match zero -->
                     <tr th:if="${#lists.isEmpty(students)}">
                         <td colspan="4" class="px-5 py-6 text-center text-gray-500 italic">
                             No students registered yet.
