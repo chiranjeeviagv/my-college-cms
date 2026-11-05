@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Grades Dashboard</title>
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-8">
+
+    <!-- Global Navigation Menu -->
+    <div class="container mx-auto max-w-4xl mb-6 flex justify-between items-center border-b bg-white p-4 rounded-lg shadow-sm">
+        <div class="flex space-x-4">
+            <a th:href="@{/}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Students</a>
+            <a th:href="@{/professors}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Faculty</a>
+            <a th:href="@{/courses}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Courses</a>
+            <a th:href="@{/grades}" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-2">Grades</a>
+        </div>
+    </div>
+
+    <!-- Main Panel -->
+    <div class="container mx-auto max-w-4xl bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Grade Management System</h1>
+        <p class="text-gray-600 mb-4">Select an academic course below to enter or edit student marks.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div th:each="course : ${courses}" class="border border-gray-200 p-4 rounded-lg hover:shadow-md transition bg-gray-50 flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-blue-600" th:text="${course.courseCode}">CS101</h3>
+                    <p class="text-gray-700 font-medium" th:text="${course.title}">Data Structures</p>
+                    <p class="text-xs text-gray-500" th:text="${'Credits: ' + course.credits}">Credits: 4</p>
+                </div>
+                <a th:href="@{/grades/manage/{id}(id=${course.id})}" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 px-3 rounded shadow">
+                    Manage Marks
+                </a>
+            </div>
+            <div th:if="${#lists.isEmpty(courses)}" class="col-span-2 text-center py-6 text-gray-500 italic">
+                No active courses available. Create a course first.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Course Grades</title>
+    <!-- Live Tailwind CSS Engine Link -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-8">
+
+    <!-- Primary Unified Navigation Bar -->
+    <div class="container mx-auto max-w-5xl mb-6 flex justify-between items-center border-b bg-white p-4 rounded-lg shadow-sm">
+        <div class="flex space-x-4">
+            <a th:href="@{/}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Students</a>
+            <a th:href="@{/professors}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Faculty</a>
+            <a th:href="@{/courses}" class="text-gray-600 hover:text-blue-600 font-medium pb-2">Courses</a>
+            <a th:href="@{/grades}" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-2">Grades</a>
+        </div>
+        <a th:href="@{/grades}" class="text-gray-600 hover:underline text-sm font-medium">
+            &larr; Back to Grades
+        </a>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="container mx-auto max-w-5xl bg-white p-6 rounded-lg shadow-md">
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Enter Student Marks</h1>
+            <p class="text-gray-600 mt-1">
+                Course: <span class="font-bold text-blue-600" th:text="${course.courseCode + ' - ' + course.title}">CS101 - Data Structures</span>
+            </p>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <thead>
+                    <tr class="bg-gray-800 text-white text-left text-sm uppercase tracking-wider">
+                        <th class="px-5 py-3 border-b">Student ID</th>
+                        <th class="px-5 py-3 border-b">Name</th>
+                        <th class="px-5 py-3 border-b">Email</th>
+                        <th class="px-5 py-3 border-b">Current Grade</th>
+                        <th class="px-5 py-3 border-b text-center">Assign / Update Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamically loops through students enrolled in this specific course -->
+                    <tr th:each="student : ${enrolledStudents}" class="border-b border-gray-200 hover:bg-gray-50 text-gray-700 transition">
+                        <td class="px-5 py-4" th:text="${student.id}">1</td>
+                        <td class="px-5 py-4 font-medium" th:text="${student.name}">John Doe</td>
+                        <td class="px-5 py-4" th:text="${student.email}">john@college.edu</td>
+                        
+                        <!-- Looks up the saved grade or outputs a pending placeholder -->
+                        <td class="px-5 py-4">
+                            <span th:each="g : ${existingGrades}" th:if="${g.student.id == student.id}">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-md" 
+                                      th:text="${g.marks + ' (' + g.letterGrade + ')'}">85 (B)</span>
+                            </span>
+                            <span th:if="${#lists.isEmpty(existingGrades) or !#lists.contains(existingGrades.![student.id], student.id)}" 
+                                  class="text-xs text-gray-400 italic">Not Graded</span>
+                        </td>
+                        
+                        <!-- Individual student grading input sub-form submission row -->
+                        <td class="px-5 py-4">
+                            <form th:action="@{/grades/save}" method="POST" class="flex items-center justify-center space-x-2">
+                                <input type="hidden" name="courseId" th:value="${course.id}" />
+                                <input type="hidden" name="studentId" th:value="${student.id}" />
+                                
+                                <input type="number" name="marks" min="0" max="100" placeholder="0-100" required
+                                       class="w-20 border border-gray-300 rounded px-2 py-1 text-center focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                
+                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold text-xs py-1.5 px-3 rounded shadow transition">
+                                    Save
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    
+                    <!-- Fallback message if no students have enrolled in this course yet -->
+                    <tr th:if="${#lists.isEmpty(enrolledStudents)}">
+                        <td colspan="5" class="px-5 py-6 text-center text-gray-500 italic">
+                            No students enrolled in this course yet. Go to the Courses panel to register an enrollment.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
