@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>College Management System</title>
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-8">
+
+    <div class="container mx-auto max-w-4xl bg-white p-6 rounded-lg shadow-md">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Student Dashboard</h1>
+            <a th:href="@{/add-student}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow">
+                + Add New Student
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200">
+                <thead>
+                    <tr class="bg-gray-800 text-white text-left text-sm uppercase tracking-wider">
+                        <th class="px-5 py-3 border-b">ID</th>
+                        <th class="px-5 py-3 border-b">Name</th>
+                        <th class="px-5 py-3 border-b">Email</th>
+                        <th class="px-5 py-3 border-b">Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="student : ${students}" class="border-b border-gray-200 hover:bg-gray-50 text-gray-700">
+                        <td class="px-5 py-4" th:text="${student.id}">1</td>
+                        <td class="px-5 py-4 font-medium" th:text="${student.name}">John Doe</td>
+                        <td class="px-5 py-4" th:text="${student.email}">john@college.edu</td>
+                        <td class="px-5 py-4" th:text="${student.department}">Computer Science</td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(students)}">
+                        <td colspan="4" class="px-5 py-6 text-center text-gray-500 italic">
+                            No students registered yet.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
