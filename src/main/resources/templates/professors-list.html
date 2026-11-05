@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Directory</title>
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-8">
+
+    <div class="container mx-auto max-w-5xl bg-white p-6 rounded-lg shadow-md">
+        <!-- System Navigation Tabs -->
+        <div class="flex justify-between items-center mb-6 border-b pb-4">
+            <div class="flex space-x-4">
+                <a th:href="@{/}" class="text-gray-600 hover:text-blue-600 font-medium">Student Dashboard</a>
+                <a th:href="@{/professors}" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-4">Faculty Directory</a>
+            </div>
+            <a th:href="@{/professors/add}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow">
+                + Add New Faculty
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200">
+                <thead>
+                    <tr class="bg-gray-800 text-white text-left text-sm uppercase tracking-wider">
+                        <th class="px-5 py-3">ID</th>
+                        <th class="px-5 py-3">Name</th>
+                        <th class="px-5 py-3">Email</th>
+                        <th class="px-5 py-3">Department</th>
+                        <th class="px-5 py-3">Designation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="prof : ${professors}" class="border-b border-gray-200 hover:bg-gray-50 text-gray-700">
+                        <td class="px-5 py-4" th:text="${prof.id}">1</td>
+                        <td class="px-5 py-4 font-medium" th:text="${prof.name}">Dr. Smith</td>
+                        <td class="px-5 py-4" th:text="${prof.email}">smith@college.edu</td>
+                        <td class="px-5 py-4" th:text="${prof.department}">Electronics</td>
+                        <td class="px-5 py-4" th:text="${prof.designation}">HOD</td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(professors)}">
+                        <td colspan="5" class="px-5 py-6 text-center text-gray-500 italic">
+                            No faculty profiles added yet.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
